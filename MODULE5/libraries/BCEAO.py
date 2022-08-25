@@ -11,6 +11,7 @@ URL = f'https://www.bceao.int/fr/{PATH_URL}'
 class DataSouper(object):
     @classmethod
     def httpFetcher(cls, URL):
+        assert len(URL) > 0, f"URL expected a non-empty string, got {URL}"
         with requests.Session() as session:
             result = session.get(URL)
             result = result.text
@@ -20,11 +21,13 @@ class DataSouper(object):
 class CurrencyScrapper(object):
     @classmethod
     def scrapLink(cls, URL):
+        assert len(URL) > 0, f"URL expected a non-empty string, got {URL}"
         return DataSouper \
             .httpFetcher(URL)
 
     @classmethod
     def souper(cls, URL):
+        assert len(URL) > 0, f"URL expected a non-empty string, got {URL}"
         result = cls.scrapLink(URL)
         return BeautifulSoup(
             result,
@@ -32,6 +35,7 @@ class CurrencyScrapper(object):
 
     @classmethod
     def getBoxCourse(cls, URL):
+        assert len(URL) > 0, f"URL expected a non-empty string, got {URL}"
         soupering = cls.souper(URL)
         soupering = soupering \
             .find_all(attrs={
@@ -43,6 +47,7 @@ class CurrencyScrapper(object):
 
     @classmethod
     def makeCurrencyList(cls, URL=URL):
+        assert len(URL) > 0, f"URL expected a non-empty string, got {URL}"
         soupering = cls.getBoxCourse(URL)
         if soupering:
             tr = soupering.find_all('tr')
@@ -63,6 +68,7 @@ class CurrencyScrapper(object):
 
     @classmethod
     def save(cls, URL, format=None):
+        assert len(URL) > 0, f"URL expected a non-empty string, got {URL}"
         soupering = cls.makeCurrencyList(URL)
         if soupering:
             return soupering

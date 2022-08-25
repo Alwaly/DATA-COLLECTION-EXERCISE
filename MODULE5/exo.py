@@ -5,9 +5,10 @@ from libraries.html import HtmlFactory
 from libraries.BCEAO import CurrencyScrapper
 import pandas as pd
 from libraries.countries import ApiGetter
+from libraries.db import DataBase
+from typing import Union
 
 if __name__ == '__main__':
-    print(Utils.divider())
     data=Utils.concatData(HtmlFactory.main(),CsvFactory.main(),JsonFactory.main())
     df=pd.DataFrame(data)
     devisesDF=pd.DataFrame(CurrencyScrapper.makeCurrencyList())
@@ -18,8 +19,18 @@ if __name__ == '__main__':
         .apply(lambda x: Utils.randomise(devisesTab))
     df=Utils.convertDevise(df, devisesDF)
     countriesInformations=ApiGetter.getNameAndFlag()
+    countriesDf=pd.DataFrame(countriesInformations)
     df['Country'] = ""
     df['Flag'] = ""
     Utils.randomiseCountryInfo(countriesInformations,df)
-    print(df[['Flag','Country']])
     print(Utils.divider())
+    #DataBase.create('DATACOLLECTIONEXERCISE')
+    #DataBase.CreateCountryTable("DATACOLLECTIONEXERCISE")
+    #DataBase.CreateDevisesTable("DATACOLLECTIONEXERCISE")
+    #DataBase.CreateCustomerTable("DATACOLLECTIONEXERCISE")
+    #DataBase.insertCountry(countriesDf,"DATACOLLECTIONEXERCISE")
+    #DataBase.insertDevises(devisesDF,"DATACOLLECTIONEXERCISE")
+    #DataBase.insertCustommers(df,"DATACOLLECTIONEXERCISE")
+    print(Utils.organizeData())
+    
+    
