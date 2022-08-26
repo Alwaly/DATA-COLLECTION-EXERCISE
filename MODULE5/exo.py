@@ -7,6 +7,13 @@ import pandas as pd
 from libraries.countries import ApiGetter
 from libraries.db import DataBase
 from typing import Union
+from fastapi import FastAPI
+app = FastAPI()
+
+
+@app.get("/")
+def read_root():
+    return Utils.organizeData()
 if __name__ == '__main__':
     htmlData = HtmlFactory.main()
 
@@ -46,5 +53,3 @@ if __name__ == '__main__':
     #DataBase.insertCountry(countriesDf,"DATACOLLECTIONEXERCISE")
     #DataBase.insertDevises(devisesDF,"DATACOLLECTIONEXERCISE")
     #DataBase.insertCustommers(df,"DATACOLLECTIONEXERCISE")
-    
-    print(Utils.organizeData())
