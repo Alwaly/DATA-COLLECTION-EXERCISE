@@ -1,6 +1,5 @@
 from .utils import Utils
 import pandas as pd
-import json
 
 
 BASE_URL = 'DATABASES/data-_zJ9Zko2Dh1LYlNNgALKE.csv'
